@@ -14,6 +14,11 @@
 {
   "compilerOptions": {
     "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "declaration": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,26 +26,21 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "declaration": true,
-    "module": "esnext",
+    "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
+    "jsx": "preserve"
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
     "./scripts",
     "./test",
-    "./typechain",
+    "./typechain"
+  ],
+  "files": [
+    "./hardhat.config.ts"
   ],
   "exclude": [
     "node_modules"
