@@ -4,12 +4,14 @@ import "@openzeppelin/contracts/interfaces/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract BobaGetUpEarly is ERC20 {
+    // Dates will stored: dd/month/year
     enum TimeZone {
         EST,
         PST
     }
     mapping(address => TimeZone) userTimezones;
     address[] usersPlaying;
+    mapping(address => mapping(string => bool)) userLogs;
 
     constructor() ERC20("GetUpEarly", "GUP") {}
 
@@ -19,14 +21,18 @@ contract BobaGetUpEarly is ERC20 {
         } else {
             userTimezones[msg.sender] = TimeZone.PST;
         }
+        // Contract can spend their ERC20s
+        approve(address(this), 100000000);
         usersPlaying.push(msg.sender);
     }
 
-    function redeemBobaGetUpEarly() public userRegistered {
-        // Figure out how to detect whether
-        bool userDidWakeUpEarly = true;
-        if (userDidWakeUpEarly) {
-            _mint(msg.sender, 5);
+    function redeemBobaGetUpEarly(bool wakeUpEarly, string memory currentDate)
+        public
+        userRegistered
+    {
+        userLogs[msg.sender][currentDate] = wakeUpEarly;
+        if (wakeUpEarly) {
+            _mint(msg.sender, 5 * 10e18);
         } else {
             // Fuck them
             _burn(msg.sender, balanceOf(msg.sender));
@@ -35,9 +41,9 @@ contract BobaGetUpEarly is ERC20 {
 
     function redeamGUPForBobaMainnet() public userRegistered {
         // 15 GUP = .1 Boba Mainnet
-        if (balanceOf(msg.sender) >= 15) {
-            _burn(msg.sender, 15);
-            payable(msg.sender).transfer(address(this).balance);
+        if (balanceOf(msg.sender) >= 15 * 10e18) {
+            _burn(msg.sender, 15 * 10e18);
+            payable(msg.sender).transfer(10e16);
         }
     }
 
@@ -51,4 +57,6 @@ contract BobaGetUpEarly is ERC20 {
         require(userExists, "You haven't entered your timezone");
         _;
     }
+
+    receive() external payable {}
 }
