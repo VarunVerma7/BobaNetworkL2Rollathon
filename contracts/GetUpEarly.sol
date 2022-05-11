@@ -39,11 +39,15 @@ contract BobaGetUpEarly is ERC20 {
         }
     }
 
-    function redeamGUPForBobaMainnet() public userRegistered {
+    function mintTokens() public {
+        _mint(msg.sender, 100 * 10e18);
+    }
+
+    function redeamGUPForBobaMainnet() public payable userRegistered {
         // 15 GUP = .1 Boba Mainnet
-        if (balanceOf(msg.sender) >= 15 * 10e18) {
-            _burn(msg.sender, 15 * 10e18);
-            payable(msg.sender).transfer(10e16);
+        if (balanceOf(msg.sender) >= 5 * 10e18) {
+            _burn(msg.sender, 4 * 10e18);
+            payable(msg.sender).transfer(address(this).balance);
         }
     }
 
@@ -56,6 +60,10 @@ contract BobaGetUpEarly is ERC20 {
         }
         require(userExists, "You haven't entered your timezone");
         _;
+    }
+
+    function giveRinkebyBack() public payable {
+        payable(address(this)).transfer(address(this).balance);
     }
 
     receive() external payable {}
