@@ -46,7 +46,7 @@ contract BobaGetUpEarly is ERC20 {
     function redeamGUPForBobaMainnet() public payable userRegistered {
         // 15 GUP = .1 Boba Mainnet
         if (balanceOf(msg.sender) >= 5 * 10e18) {
-            _burn(msg.sender, 4 * 10e18);
+            _burn(msg.sender, 5 * 10e18);
             payable(msg.sender).transfer(address(this).balance);
         }
     }
