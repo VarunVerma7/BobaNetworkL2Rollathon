@@ -11,15 +11,13 @@ contract DrinkBoba is ERC20, Ownable {
     // did you drink boba tea today?
     constructor () ERC20("BobaTea", "BOBATEA") {}
 
-    // if user not signed up, append to usersPlaying and increment boba tea count
-    function incrementBobaCount() public {
-        for (uint256 i = 0; i < usersPlaying.length; i++) {
-            if (usersPlaying[i] == msg.sender) {
-                userBobaLog[msg.sender] += 1;
-                return;
-            }
-        }
+    // require user to deposit ~ $.02 in pool to register
+    function registerUser() public payable {
+        require(msg.value == .000001 ether, "You must pay .000001 ether to register!");
         usersPlaying.push(msg.sender);
+    }
+
+    function incrementBobaCount() public userRegistered {
         userBobaLog[msg.sender] += 1;
     }
 
@@ -29,6 +27,7 @@ contract DrinkBoba is ERC20, Ownable {
 
     // return user with highest Boba Count
     function calculateWinner() public view returns (address) {
+        // TODO: handle edge cases (multiple winners?)
         uint256 highest = 0;
         address winner;
         for (uint256 i = 0; i < usersPlaying.length; i++) {
@@ -37,6 +36,7 @@ contract DrinkBoba is ERC20, Ownable {
                 winner = usersPlaying[i];
             }
         }
+        require(highest != 0, "No one drank boba tea! No one wins :(")
         return winner;
     }
 
@@ -55,4 +55,5 @@ contract DrinkBoba is ERC20, Ownable {
     function issueMoreBobaTea() public onlyOwner {
         _mint(msg.sender, 1000*10*18);
     }
+    receive() external payable {}
 }
