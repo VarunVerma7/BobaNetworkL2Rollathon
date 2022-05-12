@@ -7,8 +7,23 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
 export default function Header() {
+  const { data } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
+  let button;
+  if (data) {
+    button = <div>Connected to {data.address}<Button onClick={() => disconnect()}>Disconnect</Button></div>
+  } else {
+    button = <Button onClick={() => connect()}>Connect Wallet</Button>
+  }
+
+
   return (
     <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
       <Flex p={8} flex={1} align={"center"} justify={"center"}>
@@ -28,7 +43,7 @@ export default function Header() {
                 zIndex: -1,
               }}
             >
-              The Ultimate Sports Betting App
+              The Ultimate Perform to Earn Game
             </Text>
             <br />{" "}
             <Text color={"blue.400"} as={"span"}>
@@ -36,9 +51,8 @@ export default function Header() {
             </Text>{" "}
           </Heading>
           <Text fontSize={{ base: "md", lg: "lg" }} color={"gray.500"}>
-            This sports betting app allows you to bet on the biggest UFC, NFL,
-            and league games, with the proportion of rewards dependent on the
-            ratio of the pool deposits
+            Welcome to the Boba Universe, where you become a better human,
+            drink and earn Boba, all with your fellow Bobarias
           </Text>
           <Stack direction={{ base: "column", md: "row" }} spacing={4}>
             <Button
@@ -51,7 +65,7 @@ export default function Header() {
             >
               Try it out
             </Button>
-            <Button rounded={"full"}>How It Works</Button>
+            {button}
           </Stack>
         </Stack>
       </Flex>
