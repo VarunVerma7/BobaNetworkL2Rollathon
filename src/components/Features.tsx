@@ -8,10 +8,14 @@ import {
   Heading,
   SimpleGrid,
 } from "@chakra-ui/react";
+import { useAccount } from "wagmi";
 
 export default function Features() {
+  const { data } = useAccount();
+
   return (
     <Box bg={"gray.800"} position={"relative"}>
+      Balance: {JSON.stringify(data)}
       <Flex
         flex={1}
         zIndex={0}

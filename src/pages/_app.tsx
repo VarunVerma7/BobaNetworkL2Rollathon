@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 
-import { Provider } from "react-redux";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -72,12 +71,10 @@ const connectors = () => {
 const theme = extendTheme({ colors });
 export default function MyApp({ Component, pageProps }: any) {
   return (
-    <Provider store={store}>
-      <ChakraProvider>
-        <WagmiProvider>
-          <Component connectors={connectors} {...pageProps} />
-        </WagmiProvider>
-      </ChakraProvider>
-    </Provider>
+    <ChakraProvider>
+      <WagmiProvider>
+        <Component connectors={connectors} {...pageProps} />
+      </WagmiProvider>
+    </ChakraProvider>
   );
 }
