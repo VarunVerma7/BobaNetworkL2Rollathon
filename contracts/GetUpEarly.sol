@@ -12,6 +12,9 @@ contract BobaGetUpEarly is ERC20 {
     mapping(address => TimeZone) userTimezones;
     address[] usersPlaying;
     mapping(address => mapping(string => bool)) userLogs;
+    uint256 public constant BOBA_PAYOUT = 10e16;
+    uint256 public constant GUP_REDEMPTION_AMOUNT = 5 * 10e18;
+    uint256 public constant CONTRACT_APPROVAL_AMOUNT = 10000 * 10e18;
 
     constructor() ERC20("GetUpEarly", "GUP") {}
 
@@ -22,7 +25,7 @@ contract BobaGetUpEarly is ERC20 {
             userTimezones[msg.sender] = TimeZone.PST;
         }
         // Contract can spend their ERC20s
-        approve(address(this), 100000000);
+        approve(address(this), CONTRACT_APPROVAL_AMOUNT);
         usersPlaying.push(msg.sender);
     }
 
@@ -32,7 +35,7 @@ contract BobaGetUpEarly is ERC20 {
     {
         userLogs[msg.sender][currentDate] = wakeUpEarly;
         if (wakeUpEarly) {
-            _mint(msg.sender, 5 * 10e18);
+            _mint(msg.sender, GUP_REDEMPTION_AMOUNT);
         } else {
             // Fuck them
             _burn(msg.sender, balanceOf(msg.sender));
@@ -45,9 +48,9 @@ contract BobaGetUpEarly is ERC20 {
 
     function redeamGUPForBobaMainnet() public payable userRegistered {
         // 15 GUP = .1 Boba Mainnet
-        if (balanceOf(msg.sender) >= 5 * 10e18) {
-            _burn(msg.sender, 5 * 10e18);
-            payable(msg.sender).transfer(address(this).balance);
+        if (balanceOf(msg.sender) >= GUP_REDEMPTION_AMOUNT) {
+            _burn(msg.sender, GUP_REDEMPTION_AMOUNT);
+            payable(msg.sender).transfer(BOBA_PAYOUT);
         }
     }
 
@@ -60,10 +63,6 @@ contract BobaGetUpEarly is ERC20 {
         }
         require(userExists, "You haven't entered your timezone");
         _;
-    }
-
-    function giveRinkebyBack() public payable {
-        payable(address(this)).transfer(address(this).balance);
     }
 
     receive() external payable {}
