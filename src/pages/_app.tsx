@@ -28,27 +28,44 @@ const infuraId = process.env.INFURA_ID;
 // Chains for connectors to support
 const chains = defaultChains;
 
-const connectors = ({ chainId }) => {
-  const rpcUrl =
-    defaultChains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-    chain.mainnet.rpcUrls[0];
+const supportedChains = [
+  {
+    id: 28,
+    name: "Boba Network Rinkeby Testnet",
+    nativeCurrency: { name: "Rinkeby", symbol: "ETH", decimals: 18 },
+    rpcUrls: ["https://rinkeby.boba.network/"],
+    blockExplorers: [
+      {
+        name: "Rinkeby Boba Explorer",
+        url: "https://blockexplorer.rinkeby.boba.network/",
+      },
+    ],
+    testnet: true,
+  },
+  {
+    id: 288,
+    name: "Boba Network",
+    nativeCurrency: { name: "Boba", symbol: "ETH", decimals: 18 },
+    rpcUrls: ["https://mainnet.boba.network/"],
+    blockExplorers: [
+      { name: "Boba Scan", url: "https://blockexplorer.boba.network/" },
+    ],
+    testnet: true,
+  },
+];
+
+const connectors = () => {
   return [
-    new CoinbaseWalletConnector({
-      options: {
-        appName: "My wagmi app",
-        jsonRpcUrl: `${rpcUrl}/${infuraId}`
-      }
-    }),
+    // @ts-ignore
+    new InjectedConnector({ chains: supportedChains }),
     new WalletConnectConnector({
       options: {
-        infuraId,
-        qrcode: true
-      }
+        rpc: {
+          28: "https://rinkeby.boba.network/",
+        },
+        qrcode: true,
+      },
     }),
-    new InjectedConnector({
-      chains,
-      options: { shimDisconnect: true }
-    })
   ];
 };
 
