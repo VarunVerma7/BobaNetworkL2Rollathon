@@ -5,11 +5,12 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 import store from "../app/store";
 import { extendTheme } from "@chakra-ui/react";
-import { WagmiProvider } from "wagmi";
+import { Provider, createClient } from "wagmi";
 import { chain, defaultChains } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+import { providers } from "ethers";
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -41,16 +42,16 @@ const supportedChains = [
     ],
     testnet: true,
   },
-  {
-    id: 288,
-    name: "Boba Network",
-    nativeCurrency: { name: "Boba", symbol: "ETH", decimals: 18 },
-    rpcUrls: ["https://mainnet.boba.network/"],
-    blockExplorers: [
-      { name: "Boba Scan", url: "https://blockexplorer.boba.network/" },
-    ],
-    testnet: true,
-  },
+  // {
+  //   id: 288,
+  //   name: "Boba Network",
+  //   nativeCurrency: { name: "Boba", symbol: "ETH", decimals: 18 },
+  //   rpcUrls: ["https://mainnet.boba.network/"],
+  //   blockExplorers: [
+  //     { name: "Boba Scan", url: "https://blockexplorer.boba.network/" },
+  //   ],
+  //   testnet: true,
+  // },
 ];
 
 const connectors = () => {
@@ -68,13 +69,26 @@ const connectors = () => {
   ];
 };
 
+const client = createClient({
+  autoConnect: true,
+  provider() {
+    return new providers.StaticJsonRpcProvider(
+      "https://rinkeby.boba.network/",
+      {
+        chainId: 28,
+        name: "Rinkeby",
+      }
+    );
+  },
+});
+
 const theme = extendTheme({ colors });
 export default function MyApp({ Component, pageProps }: any) {
   return (
     <ChakraProvider>
-      <WagmiProvider>
+      <Provider client={client}>
         <Component connectors={connectors} {...pageProps} />
-      </WagmiProvider>
+      </Provider>
     </ChakraProvider>
   );
 }

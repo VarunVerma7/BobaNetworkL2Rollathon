@@ -8,14 +8,19 @@ import {
   Heading,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance, useNetwork, useProvider } from "wagmi";
 
 export default function Features() {
-  const { data } = useAccount();
+  const { data: account } = useAccount();
+  const provider = useProvider();
+  const { data: network } = useNetwork();
+
+  const { data } = useBalance({
+    addressOrName: account?.address,
+  });
 
   return (
     <Box bg={"gray.800"} position={"relative"}>
-      Balance: {JSON.stringify(data)}
       <Flex
         flex={1}
         zIndex={0}
@@ -52,7 +57,7 @@ export default function Features() {
                 fontSize={"xl"}
                 color={"gray.500"}
               >
-                Technology
+                Technology Balance: {data.formatted}
               </Text>
               <Heading
                 color={"white"}
