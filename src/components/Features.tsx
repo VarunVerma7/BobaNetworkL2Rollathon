@@ -57,7 +57,7 @@ export default function Features() {
                 fontSize={"xl"}
                 color={"gray.500"}
               >
-                Technology Balance: {data.formatted}
+                Technology Balance: {data?.formatted}
               </Text>
               <Heading
                 color={"white"}
