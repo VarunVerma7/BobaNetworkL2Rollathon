@@ -52,7 +52,7 @@ export default function Header() {
           </Heading>
           <Text fontSize={{ base: "md", lg: "lg" }} color={"gray.500"}>
             Welcome to the Boba Universe, where you become a better human,
-            drink and earn Boba, all with your fellow Bobarias
+            drink and earn Boba, all with your fellow Bobarians
           </Text>
           <Stack direction={{ base: "column", md: "row" }} spacing={4}>
             <Button
@@ -73,7 +73,7 @@ export default function Header() {
         <Image
           alt={"Login Image"}
           objectFit={"cover"}
-          src={"header-assets/baseball.png"}
+          src={"header-assets/boba_colorful.png"}
         />
       </Flex>
     </Stack>

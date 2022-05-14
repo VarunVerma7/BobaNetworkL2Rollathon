@@ -35,7 +35,7 @@ contract DrinkBoba is ERC20, Ownable {
     }
 
     // TODO: rethink pattern here, should there be a param or frontend validates msg.value
-    function redeemGUPForBobaMainnet() public payable userRegistered {
+    function redeemBobaTeaForBobaMainnet() public payable userRegistered {
         // 15 GUP = .1 Boba Mainnet
         if (balanceOf(msg.sender) >= BTEA_REDEMPTION_AMOUNT) {
             _burn(msg.sender, BTEA_REDEMPTION_AMOUNT);

@@ -64,13 +64,13 @@ export default function Features() {
                 mb={5}
                 fontSize={{ base: "3xl", md: "5xl" }}
               >
-                21st century agriculture
+                What is BobaVerse ?
               </Heading>
               <Text fontSize={"xl"} color={"gray.400"}>
-                The NewLife™ technology allows you to monitor your crops and get
-                complete insights at real time. The proprietary
-                software/hardware ecosystem prevents your plants from getting
-                neglected.
+                The Leading Self-Improvement Game on Boba Network, an Ethereum Layer 2.
+                Enjoy lower fees, fun with friends, and more - all thanks to the Boba
+                Network. Wake up early, drink boba tea, invite your friends, and grow
+                the boba network collectively as a team.
               </Text>
             </Box>
 
@@ -92,7 +92,7 @@ export default function Features() {
               ))}
             </SimpleGrid>
           </Stack>
-          <Flex flex={1} />
+          {/* <Flex flex={1} /> */}
         </Stack>
       </Container>
     </Box>
