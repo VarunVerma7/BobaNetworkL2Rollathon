@@ -8,12 +8,15 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract DrinkBoba is ERC20, Ownable {
     mapping(address => uint256) public userBobaLog;
     address [] public usersPlaying;
-    // did you drink boba tea today?
+    uint256 public constant BOBA_PAYOUT = 10e16;
+    uint256 public constant BTEA_REDEMPTION_AMOUNT = 5 * 10e18;
+    uint256 public constant CONTRACT_APPROVAL_AMOUNT = 10000 * 10e18;
     constructor () ERC20("BobaTea", "BOBATEA") {}
 
     // require user to deposit ~ $.02 in pool to register
     function registerUser() public payable {
         require(msg.value == .000001 ether, "You must pay .000001 ether to register!");
+        approve(address(this), CONTRACT_APPROVAL_AMOUNT);
         usersPlaying.push(msg.sender);
     }
 
@@ -23,6 +26,21 @@ contract DrinkBoba is ERC20, Ownable {
 
     function getUserBobaCount() public view userRegistered returns (uint256)  {
         return userBobaLog[msg.sender];
+    }
+
+    // TODO: Add logic for when we want to call this (once a week/month?)
+    function declareWinner() public onlyOwner {
+        address winner = calculateWinner();
+        _mint(winner, BTEA_REDEMPTION_AMOUNT);
+    }
+
+    // TODO: rethink pattern here, should there be a param or frontend validates msg.value
+    function redeemGUPForBobaMainnet() public payable userRegistered {
+        // 15 GUP = .1 Boba Mainnet
+        if (balanceOf(msg.sender) >= BTEA_REDEMPTION_AMOUNT) {
+            _burn(msg.sender, BTEA_REDEMPTION_AMOUNT);
+            payable(msg.sender).transfer(BOBA_PAYOUT);
+        }
     }
 
     // return user with highest Boba Count
@@ -36,7 +54,7 @@ contract DrinkBoba is ERC20, Ownable {
                 winner = usersPlaying[i];
             }
         }
-        require(highest != 0, "No one drank boba tea! No one wins :(")
+        require(highest != 0, "No one drank boba tea! No one wins :(");
         return winner;
     }
 
