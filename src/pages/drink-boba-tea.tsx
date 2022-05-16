@@ -16,8 +16,7 @@ import {
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { MdLocalShipping } from "react-icons/md";
+
 import Navbar from "../components/Navbar";
 
 export default function Simple() {
@@ -189,7 +188,6 @@ export default function Simple() {
               alignItems="center"
               justifyContent={"center"}
             >
-              <MdLocalShipping />
               <Text>2-3 business days delivery</Text>
             </Stack>
           </Stack>
