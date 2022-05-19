@@ -15,11 +15,21 @@ import {
   VisuallyHidden,
   List,
   ListItem,
+  useDisclosure,
+} from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { useContractRead, useContractWrite } from "wagmi";
 import GUPAbi from "../abis/GUP.json";
 import Navbar from "../components/Navbar";
-
+import GUPPool from "../components/GUPPool";
 export default function Simple() {
   const { data, isError, isLoading, write } = useContractWrite(
     {
@@ -31,6 +41,8 @@ export default function Simple() {
       args: ["1"],
     }
   );
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   console.log(
     `Data ${data} isError ${isError} isLoading ${isLoading} write ${write}`
   );
@@ -125,7 +137,22 @@ export default function Simple() {
                 </SimpleGrid>
               </Box>
             </Stack>
+            <>
+              <Button onClick={onOpen}>Open Modal</Button>
 
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <GUPPool />
+
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={onClose}>
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
             <Button
               onClick={() => enterPool()}
               rounded={"none"}
