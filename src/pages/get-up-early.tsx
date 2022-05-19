@@ -21,16 +21,25 @@ import GUPAbi from "../abis/GUP.json";
 import Navbar from "../components/Navbar";
 
 export default function Simple() {
-  const { data, isError, isLoading } = useContractRead(
+  const { data, isError, isLoading, write } = useContractWrite(
     {
       addressOrName: "0x468703f988F7D172c562eb0d5391f795f7bf1303",
       contractInterface: GUPAbi,
     },
-    "decimals"
+    "enterTimeZone",
+    {
+      args: ["1"],
+    }
   );
-  console.log("Data decimals ", data);
+  console.log(
+    `Data ${data} isError ${isError} isLoading ${isLoading} write ${write}`
+  );
 
-  const enterPool = () => {};
+  const enterPool = () => {
+    console.log("calling write ");
+    write();
+  };
+
   return (
     <>
       <Navbar />
