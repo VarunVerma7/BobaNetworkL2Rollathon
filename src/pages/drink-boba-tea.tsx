@@ -119,6 +119,7 @@ export default function Simple() {
             </Stack>
 
             <Button
+              onClick={() => console.log("hi")}
               rounded={"none"}
               w={"full"}
               mt={8}
