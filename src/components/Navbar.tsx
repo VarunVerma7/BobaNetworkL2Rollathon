@@ -79,15 +79,16 @@ export default function Navbar() {
             boxSize="90px"
           />
           <Center>
-            <Text
+            <Link
               p={4}
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
               fontFamily={"heading"}
               fontSize={"lg"}
               color={useColorModeValue("gray.800", "white")}
+              href={"/"}
             >
               BobaVerse
-            </Text>
+            </Link>
 
             <Flex display={{ base: "none", md: "flex" }} ml={10}>
               <DesktopNav />

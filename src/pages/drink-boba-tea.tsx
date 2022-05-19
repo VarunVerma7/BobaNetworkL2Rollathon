@@ -142,7 +142,7 @@ export default function Simple() {
                 </Text>
               </Box>
             </Stack>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <Button onClick={onOpen}>Enter Boba Tea</Button>
             <>
               <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
