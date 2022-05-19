@@ -17,9 +17,11 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { BsGithub, BsLinkedin, BsPerson, BsTwitter } from "react-icons/bs";
 import { MdEmail, MdOutlineEmail } from "react-icons/md";
+import { useContractWrite } from "wagmi";
+import GUPAbi from "../abis/GUP.json";
 
 const confetti = {
   light: {
@@ -38,6 +40,26 @@ const CONFETTI_DARK = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2
 
 export default function ContactFormWithSocialButtons() {
   const { hasCopied, onCopy } = useClipboard("example@example.com");
+  const [before7, setBefore7] = useState(false);
+  const { data, isError, isLoading, write } = useContractWrite(
+    {
+      addressOrName: "0x468703f988F7D172c562eb0d5391f795f7bf1303",
+      contractInterface: GUPAbi,
+    },
+    "redeemBobaGetUpEarly",
+    {
+      args: [before7, new Date().toLocaleDateString()],
+    }
+  );
+
+  const redeem = () => {
+    console.log("redeeming");
+    const today = new Date().getHours();
+    if (today <= 7) {
+      setBefore7(true);
+    }
+    write();
+  };
 
   return (
     <Flex
@@ -117,6 +139,7 @@ export default function ContactFormWithSocialButtons() {
                       bg: "blue.500",
                     }}
                     isFullWidth
+                    onClick={redeem}
                   >
                     Confirm Wake Up Time
                   </Button>
