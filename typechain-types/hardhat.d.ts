@@ -36,10 +36,6 @@ declare module "hardhat/types/runtime" {
       name: "BobaGetUpEarly",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BobaGetUpEarly__factory>;
-    getContractFactory(
-      name: "BobaGetUpEarly",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.BobaGetUpEarly__factory>;
 
     getContractAt(
       name: "Ownable",
@@ -66,11 +62,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.DrinkBoba>;
-    getContractAt(
-      name: "BobaGetUpEarly",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.BobaGetUpEarly>;
     getContractAt(
       name: "BobaGetUpEarly",
       address: string,

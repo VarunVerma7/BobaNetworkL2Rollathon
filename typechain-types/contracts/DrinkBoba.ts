@@ -39,13 +39,12 @@ export interface DrinkBobaInterface extends utils.Interface {
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "getUserBobaCount()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "incrementBobaCount()": FunctionFragment;
+    "incrementBobaCount(bool)": FunctionFragment;
     "issueMoreBobaTea()": FunctionFragment;
     "lockTime(address)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "redeemBobaTeaForBobaMainnet()": FunctionFragment;
-    "registerUser()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
@@ -74,7 +73,6 @@ export interface DrinkBobaInterface extends utils.Interface {
       | "name"
       | "owner"
       | "redeemBobaTeaForBobaMainnet"
-      | "registerUser"
       | "renounceOwnership"
       | "symbol"
       | "totalSupply"
@@ -121,7 +119,7 @@ export interface DrinkBobaInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "incrementBobaCount",
-    values?: undefined
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "issueMoreBobaTea",
@@ -132,10 +130,6 @@ export interface DrinkBobaInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "redeemBobaTeaForBobaMainnet",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "registerUser",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -206,10 +200,6 @@ export interface DrinkBobaInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "redeemBobaTeaForBobaMainnet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerUser",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -350,6 +340,7 @@ export interface DrinkBoba extends BaseContract {
     ): Promise<ContractTransaction>;
 
     incrementBobaCount(
+      drinkBoba: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -364,10 +355,6 @@ export interface DrinkBoba extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     redeemBobaTeaForBobaMainnet(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    registerUser(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -442,6 +429,7 @@ export interface DrinkBoba extends BaseContract {
   ): Promise<ContractTransaction>;
 
   incrementBobaCount(
+    drinkBoba: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -456,10 +444,6 @@ export interface DrinkBoba extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   redeemBobaTeaForBobaMainnet(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  registerUser(
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -530,7 +514,10 @@ export interface DrinkBoba extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    incrementBobaCount(overrides?: CallOverrides): Promise<void>;
+    incrementBobaCount(
+      drinkBoba: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     issueMoreBobaTea(overrides?: CallOverrides): Promise<void>;
 
@@ -541,8 +528,6 @@ export interface DrinkBoba extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     redeemBobaTeaForBobaMainnet(overrides?: CallOverrides): Promise<void>;
-
-    registerUser(overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -647,6 +632,7 @@ export interface DrinkBoba extends BaseContract {
     ): Promise<BigNumber>;
 
     incrementBobaCount(
+      drinkBoba: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -661,10 +647,6 @@ export interface DrinkBoba extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemBobaTeaForBobaMainnet(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    registerUser(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -747,6 +729,7 @@ export interface DrinkBoba extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     incrementBobaCount(
+      drinkBoba: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -764,10 +747,6 @@ export interface DrinkBoba extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemBobaTeaForBobaMainnet(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    registerUser(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

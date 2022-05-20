@@ -117,12 +117,12 @@ export default function App() {
   const [ uploadImage, setUploadImage ] = useState(false);
   const { data, isError, isLoading, write } = useContractWrite(
     {
-      addressOrName: "0x468703f988F7D172c562eb0d5391f795f7bf1303",
+      addressOrName: "0xfa452E18dbd66d17dd3919625524aF9cDf1DC36E",
       contractInterface: DrinkBoba,
     },
-    "redeemBobaGetUpEarly",
+    "incrementBobaCount",
     {
-      args: ["hi", new Date().toLocaleDateString()],
+      args: [true],
     }
   );
 

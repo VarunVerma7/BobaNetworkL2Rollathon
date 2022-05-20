@@ -40,7 +40,7 @@ export default function Simple() {
     },
     "enterTimeZone",
     {
-      args: ["1"],
+      args: [true],
     }
   );
   const { isOpen, onOpen, onClose } = useDisclosure();

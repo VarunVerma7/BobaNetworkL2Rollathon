@@ -3,6 +3,4 @@
 /* eslint-disable */
 import type * as getUpEarlySol from "./GetUpEarly.sol";
 export type { getUpEarlySol };
-import type * as greeterSol from "./Greeter.sol";
-export type { greeterSol };
 export type { DrinkBoba } from "./DrinkBoba";
